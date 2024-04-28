@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="card border-primary mb-3 p-3  shadow-sm rounded-0 text-center">
+  <p style="font-size: x-large; font-weight: 400;  font-family: 'Arabic-font';">Search for People</p>
+</div>
+<br>
+<br>
+
+<div class="card border-primary-subtle mb-3 p-3">
+    <form method="POST">
+        {% csrf_token %}
+        <fieldset>
+            <div class="card border-primary-subtle rounded-0 mb-3 p-3">
+                <div class="d-flex justify-content-between">
+                    <input type="input" class="form-control rounded-0 text-end shadow" placeholder="Search" name="search">
+                    <button type="submit" title="search" class="btn btn-primary shadow rounded-0"><i class="fa fa-search"></i></button>
+                </div>
+                <br>
+                {% if search %}
+                <p style="font-size: x-large; font-weight: 300;"> You searched for: {{ search }}</p>
+                </div>
+
+                {% if searched %}
+                {% for result in searched %}
+                <div class="card border-secondary mb-3" style="max-width: 540px;">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            {% if result.profile.profile_image %}
+                            <img src="{{ result.profile.profile_image.url }}" class="img-fluid rounded-start" style="height: 200px; width: 200px;" alt="{{ result.profile.user.username }}">
+                            {% else %}
+                            <img src="{% static 'images/pro.png' %}" class="img-fluid rounded-start" alt="Profile Picture">
+                            {% endif %}
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ result.profile.user.username }}</h5>
+                                <p class="card-text"><a href="{% url 'profile' result.profile.user.id %}">@{{ result.profile.user.username|lower }}</a></p>
+                                <small class="text-muted">Last Updated: {{ result.profile.date_modifies }}</small>
+                                <br><br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <h3>Sorry, no username contains {{ search }}, please try again.</h3>
+                {% endif %}
+
+                {% endif %}
+        </fieldset>
+    </form>
+</div>
+{% endblock %}

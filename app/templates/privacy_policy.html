@@ -1,0 +1,93 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% load i18n %}
+
+<div class="col-lg-6">
+    <div class="detail p-5">
+      <div class="display-header">
+        <h2 class="display-2 text-uppercase text-dark pb-2">privacy policy</h2>
+        <p class="pb-3">At EduRate, we value your privacy and are committed to protecting your personal information. Here's a summary of how we collect, use, and protect your data:</p>
+        <p>- Information Collection: We may collect your email address and name to provide our services effectively.<br>
+          - Data Usage: Your information is used to improve our service, provide support, and detect technical issues.<br>
+          - Data Security: We prioritize the security of your data, but no method of transmission over the internet is 100% secure.
+        </p>
+        <p>By using our service, you agree to the terms outlined in this policy. If you have any questions or concerns, please contact us.</p>
+        
+      </div>
+    </div>
+  </div>
+
+  <footer id="footer" class="overflow-hidden padding-large">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="row d-flex flex-wrap justify-content-between">
+          <div class="col-lg-3 col-sm-6 pb-3 pe-4">
+            <div class="footer-menu">
+             <h1>EduRate</h1>
+
+              <p>Mi facilisis facilisis orci vitae. Cum nisi morbi integer tincidunt ornare ac praesent in. Dolor tempus arcu sit quis nunc arcu facilisis quis eget nisi morbi integer.</p>
+            </div>
+            <div class="copyright">
+              <p>© Copyright 2023. Design by Aya
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-2 col-sm-6 pb-3">
+            <div class="footer-menu text-uppercase">
+              <h5 class="widget-title pb-2">Quick Links</h5>
+              <ul class="menu-list list-unstyled text-uppercase">
+                <li class="menu-item pb-2">
+                    <a href="{% url 'home' %}">Home</a>
+                  </li>
+                  <li class="menu-item pb-2">
+                    <a href="{% url 'about' %}">About</a>
+                  </li>
+                  <li class="menu-item pb-2">
+                    <a href="{% url 'privacy_policy' %}">Privacy Policy</a>
+                  </li>
+                  <li class="menu-item pb-2">
+                    <a href="{% url 'terms_of_service' %}">terms of service</a>
+                  </li>
+                
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-2 col-sm-6 pb-3">
+            <div class="footer-menu text-uppercase">
+              <h5 class="widget-title pb-2">Social</h5>
+              <div class="social-links">
+                <ul class="list-unstyled">
+                  <li class="pb-2">
+                    <a href="#">Facebook</a>
+                  </li>
+                  <li class="pb-2">
+                    <a href="#">Twitter</a>
+                  </li>
+                  <li class="pb-2">
+                    <a href="#">Pinterest</a>
+                  </li>
+                  <li class="pb-2">
+                    <a href="#">Instagram</a>
+                  </li>
+                  <li>
+                    <a href="#">Youtube</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-sm-6">
+            <div class="footer-menu contact-item">
+              <h5 class="widget-title text-uppercase pb-2">Contact Us</h5>
+              <p><a href="">+ (0) 34 56 78 910</a></p>
+              <p><a href="mailto:">ellie@gmail.com</a></p>
+              <p>Cairo, Egypt</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  {% endblock%}

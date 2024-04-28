@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container text-center">
+  
+   
+      <div class="card border-primary shadow-sm mb-3 p-3 ">
+        <p style="font-size: x-large; font-weight: 400;">Posts</p>
+      </div>
+      <br/>
+      <br/>
+      
+
+      <div class="list-group shadow-sm">
+      
+        <a href="{% url 'profile' meep.user.profile.user.id %}" class="list-group-item  flex-column align-items-start">
+          
+          <div class="d-flex w-100 justify-content-between">
+           
+            <h5 class="mb-1">
+              {% if meep.user.profile.profile_image %}
+              <img src="{{ meep.user.profile.profile_image.url }}" class="img-fluid rounded-circle" style="height: 50px; width: 50px;" alt="{{ profile.user.username }}">
+              {% else %}
+              <img src="{% static 'images/pro.png' %}" class="img-fluid rounded-circle" style="height: 50px; width: 50px;" alt="Profile Picture">
+              {% endif %}
+              &nbsp;
+              {{meep.user}}
+            </h5>
+           
+              <small class="text-muted">{{meep.created_at}}</small>
+             
+           
+             
+            
+          </div>
+          <hr>
+          <p class="mb-1">{{meep.body}}</p>
+        
+          {% if meep.image %}
+          <img src="{{ meep.image.url }}" class="img-fluid"   alt="Post Image">
+          {% endif %}
+         
+         <br>
+          
+          <div id="meep_{{ meep.pk }}"  class="d-flex w-100 justify-content-between">
+    {% if user in meep.likes.all %}
+        <a href="{% url 'meep_like' meep.id %}" class="list-group-item list-group-item-action">
+            Unrate <i class="fa-solid fa-star" style="color:yellow;"> &nbsp;<small class="text-muted">{{ meep.number_of_likes }} Rates</small></i>
+        </a>
+    {% else %}
+        <a href="{% url 'meep_like' meep.id %}" class="list-group-item list-group-item-action">
+            Rate <i class="fa fa-star-o" style="color:yellow;"> 
+                &nbsp;<small class="text-muted">{{ meep.number_of_likes }} Rates</small>
+            </i>
+        </a>
+    {% endif %}
+    <a href="{% url 'report_content' meep.id  %}" class="list-group-item flex-column align-items-start" data-toggle="tooltip" title="Report Content">
+        <i class="fa fa-rectangle-list"></i>
+    </a>
+</div>
+
+          <br/>
+        
+          <!-- Display Comments -->
+          <div class="list-group-item list-group-item flex-column align-items-start border-0">
+            <p style="font-size: medium; font-weight: 400; ">Comments <i class="fa fa-comments-o"></i></p>
+            <hr/>
+          <ul class="list-group-item list-group-item flex-column align-items-start border-0">
+           
+            {% for comment in meep.comments.all  %}
+            <li>
+              <div class="d-flex w-100 justify-content-between">
+                <div class="col-10">
+              {{ comment.user.username }}:&nbsp; {{ comment.body }}
+              {% if request.user.is_authenticated and request.user == comment.user%}
+            </div>
+            
+            <div class="container">
+            <a href="{% url 'delete_comment' comment.id %}" class="list-group-item list-group-item-action  align-items-start"><i class="fa-solid fa-trash" style="font-size: small;"></i></a>
+            <a href="{% url 'edit_comment' comment.id %}" class="list-group-item list-group-item-action  align-items-start"><i class="fa-solid fa-edit" style="font-size: small;"></i></a>
+          </div>
+        
+            {%endif%}
+          </div>
+            </li>
+            <hr/>
+            {% endfor %}
+            
+          </ul>
+
+          <!-- Comment Form -->
+          <form method="post" action="{% url 'add_comment' meep.id %}">
+            {% csrf_token %}
+            <!-- Comment Input Fields Here -->
+            <textarea name="body" rows="3"  class="img-fluid" cols="80" placeholder="Write your comment here"></textarea>
+            <br>
+            <br>
+            <button type="submit" class="list-group-item list-group-item-action flex-column align-items-center border-top-0 border-end-0 border-start-0">Comment <i class="fa fa-comment-o"></i></button>
+          </form>
+          <br>
+        </div>
+       
+          <a href="{% url 'home' %}" class="list-group-item list-group-item-action flex-column   border-top-0 border-1 border-start-0 border-end-0">Back &nbsp;<i class="fa-solid fa-arrow-left"></i></a><br/>
+          
+        </a>
+      </div>
+      <br/>
+    </div>
+    <br/>
+    
+  {% endblock%}
+
+  <!-- Add this script in your base template or in a relevant JavaScript file -->
+<script>
+  $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();
+  });
+</script>

@@ -1,0 +1,33 @@
+<!-- show_meep.html -->
+
+{% extends 'base.html' %}
+{% block content %}
+  <div class="meep">
+    <p>{{ meep.body }}</p>
+    <!-- عرض صورة  هنا -->
+    {% if meep.image %}
+      <img src="{{ meep.image.url }}" style="max-width: 34rem;" alt=" Image">
+    
+    {% endif %}
+    <p> Post's {{ meep.user.username }} at {{ meep.created_at }}</p>
+    <p>Rates: {{ meep.number_of_likes }}</p>
+
+    <!-- عرض التعليقات -->
+    <p style="font-size: x-large; font-weight: 400;">Comments</p>
+    <ul>
+      {% for comment in meep.comments.all|slice:3 %}
+        <li>{{ comment.user.username }}: {{ comment.body }}</li>
+      {% endfor %}
+    </ul>
+
+    <form method="post" action="{% url 'add_comment' meep.id %}">
+        {% csrf_token %}
+        <!-- حقول إدخال التعليقات هنا -->
+        <!-- على سبيل المثال، يمكنك تضمين مربع نص لجسم  -->
+        
+        <textarea title="التعليق" name="body" rows="3" cols="50"></textarea>
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+  </div>
+{% endblock %}

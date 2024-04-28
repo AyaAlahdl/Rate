@@ -1,0 +1,89 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% load i18n %}
+
+<div class="col-lg-6">
+    <div class="detail p-5">
+      <div class="display-header">
+        <h2 class="display-2 text-uppercase text-dark pb-2">About Us</h2>
+        <p class="pb-3">EduRate is a game-changer for students seeking the best education. The platform allows students to post reviews of their teachers, providing valuable insight into what works and what doesn't. Making informed decisions about the educators you choose has never been easier. With EduRate, you can be confident that you're investing in the best education possible. Join the thousands of students who have already discovered EduRate and take control of your education today!</p>
+
+       
+      </div>
+    </div>
+  </div>
+  
+  <hr>
+  <footer id="footer" class="overflow-hidden padding-large">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="row d-flex flex-wrap justify-content-between">
+          <div class="col-lg-3 col-sm-6 pb-3 pe-4">
+            <div class="footer-menu">
+             <h1>EduRate</h1>
+
+
+            </div>
+            <div class="copyright">
+              <p>© Copyright 2024. Design by Aya
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-2 col-sm-6 pb-3">
+            <div class="footer-menu text-uppercase">
+              <h5 class="widget-title pb-2">Quick Links</h5>
+              <ul class="menu-list list-unstyled text-uppercase">
+                <li class="menu-item pb-2">
+                  <a href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="menu-item pb-2">
+                  <a href="{% url 'about' %}">About</a>
+                </li>
+                <li class="menu-item pb-2">
+                  <a href="{% url 'privacy_policy' %}">Privacy Policy</a>
+                </li>
+                <li class="menu-item pb-2">
+                  <a href="{% url 'terms_of_service' %}">terms of service</a>
+                </li>
+                
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-2 col-sm-6 pb-3">
+            <div class="footer-menu text-uppercase">
+              <h5 class="widget-title pb-2">Social</h5>
+              <div class="social-links">
+                <ul class="list-unstyled">
+                  <li class="pb-2">
+                    <a href="#">Facebook</a>
+                  </li>
+                  <li class="pb-2">
+                    <a href="#">Twitter</a>
+                  </li>
+                  <li class="pb-2">
+                    <a href="#">Pinterest</a>
+                  </li>
+                  <li class="pb-2">
+                    <a href="#">Instagram</a>
+                  </li>
+                  <li>
+                    <a href="#">Youtube</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-sm-6">
+            <div class="footer-menu contact-item">
+              <h5 class="widget-title text-uppercase pb-2">Contact Us</h5>
+              <p><a href="mailto:">aya.mohammed.hashem@gmail.com</a></p>
+              <p>Cairo, Egypt</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  {% endblock%}

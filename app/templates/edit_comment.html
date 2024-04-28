@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="text-center">
+  <div class="row justify-content-center">
+    <div class="col-8">
+      
+      <br/>
+      {% if form %}
+      <form method="POST" class="shadow p-3" >
+        {% csrf_token %}
+        <fieldset>
+          <div class="detail">
+            <div class="display-header">
+              <h2 class=" text-uppercase text-dark"> Edit Comment </h2>
+             
+                
+            </div>
+          </div>
+          <legend></legend>
+          <hr/>
+          {{ form.as_p }}
+          <br>
+          <button type="submit" class="btn btn-primary rounded-0">Edit <i class="fa fa-edit"></i></button>
+          <br/>
+          <hr/>
+          <a href="{% url 'meep_show' pk=meep.pk %}" class="btn btn-light text-black rounded-0">Back <i class="fa fa-arrow-left"></i></a><br/>
+        </fieldset>
+      </form>
+      {% endif %}
+      <br/>
+      <br/>
+    </div>
+  </div>
+</div>
+{% endblock %}

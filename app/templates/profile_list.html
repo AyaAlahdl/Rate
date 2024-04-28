@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="d-flex justify-content-center">
+  <div>
+    <div class="card border-primary  rounded-0 mb-3 p-3 text-center shadow-sm" >
+        <p style="font-size: x-large; font-weight: 600; 
+        ">Friends List</p>
+    </div>
+
+    {% if profiles %}
+    <div class="row">
+        {% for profile in profiles %}
+        <div class="col-md-6">
+          <div class="card border-secondary mb-3 shadow-sm">
+            <div class="row g-0">
+              <div class="col-md-4">
+                {% if profile.profile_image %}
+                <img src="{{ profile.profile_image.url }}" class="img-fluid rounded-start" style="height: 200px; width: 200px;" alt="{{ profile.user.username }}">
+                {% else %}
+                <img src="{% static 'images/pro.png' %}" class="img-fluid rounded-start" style="height: 200px; width: 200px;" alt="Profile Picture">
+                {% endif %}
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">{{ profile.user.username }}</h5>
+                  <p class="card-text"><a href="{% url 'profile' profile.user.id %}">@{{ profile.user.username|lower }}</a></p>
+                  <small class="text-muted">Last Updated: {{ profile.date_modifies }}</small>
+                  <br><br>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

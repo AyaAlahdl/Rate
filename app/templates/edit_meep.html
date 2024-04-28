@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container text-center">
+  <div class="row justify-content-center">
+    <div class="col-8">
+      <div class="card border-primary mb-3 p-3 shadow-sm rounded-0" style="max-width: 54rem;">
+        <p style="font-size: x-large; font-weight: 600; font-family: 'Arabic-font';">Posts</p>
+      </div>
+      <br/>
+      <br/>
+
+      <div class="list-group shadow">
+        <a href="#" class="list-group-item  flex-column align-items-start">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">
+              {% if meep.user.profile.profile_image %}
+              <img src="{{ meep.user.profile.profile_image.url }}" class="img-fluid rounded-circle" style="height: 50px; width: 50px;" alt="{{ profile.user.username }}">
+              {% else %}
+              <img src="{% static 'images/pro.png' %}" class="img-fluid rounded-circle" style="height: 50px; width: 50px;" alt="images">
+              {% endif %}
+              &nbsp;
+              {{meep.user}}
+            </h5>
+            <small class="text-muted">{{meep.created_at}}</small>
+          </div>
+          <p class="mb-1">{{meep.body}} </p>
+          {% if meep.image %}
+          <img src="{{ meep.image.url }}" style="max-width: 34rem;" alt="Post Image">
+          {% endif %}
+          <hr>
+          <small class="text-muted ">{{meep.number_of_likes}} Rates 
+            {% if user in meep.likes.all %}
+            <div id="meep_{{ meep.pk }}" >
+            <a href="{% url 'meep_like' meep.id %}"  class="list-group-item list-group-item-action flex-column align-items-start">
+              Unrate <i class="fa-solid fa-star" style="color: yellow"></i> </a>
+              
+              {% else %}
+              <a href="{% url 'meep_like' meep.id %}"  class="list-group-item list-group-item-action flex-column align-items-start">
+                Rate <i class="fa fa-star-o" style="color:yellow;"></i> 
+                
+              </a>
+            </div>
+              {%endif%}
+              <a href="{% url 'home' %}"  class="list-group-item list-group-item-action flex-column align-items-start">Back &nbsp;<i class="fa-solid fa-arrow-left" ></i></a><br/>
+            </small>
+          </a>
+        </div>
+        <br/>
+        {%if form %}
+        <form method="POST"  class="shadow p-3" enctype="multipart/form-data">
+          {% csrf_token %}
+          <fieldset>
+            <legend style="font-size: x-large; font-weight: 600; font-family: 'Arabic-font';">Edit Post</legend>
+            <hr/>
+            {{ form.body }}
+            
+            <div class="form-group text-body-emphasis">
+              &nbsp;&nbsp; &nbsp;<br> <i class="fa fa-image"></i> Choose Image {{ form.image}}
+            </div>
+            <br>
+            
+            <br>
+            
+            
+            <button type="submit" class="btn btn-primary rounded-0">Edit <i class="fa fa-edit"></i></button>
+            <br/>
+            <hr/>
+            <a href="{% url 'profile' pk=user.pk %}" class="btn btn-light text-black rounded-0">Back <i class="fa fa-arrow-left"></i></a><br/>
+          </fieldset>
+        </form>
+        {%endif%}
+        <br/>
+        <br/>
+        
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock%}

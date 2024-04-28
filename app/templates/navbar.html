@@ -1,0 +1,148 @@
+
+{% load static %}
+
+<header id="header" class="site-header text-black">
+  <nav id="header-nav" class="navbar navbar-expand-lg shadow-sm px-3 mb-3">
+   
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'home' %}">
+        <h1>EduRate</h1>
+      </a>
+      <button class="navbar-toggler d-flex d-lg-none order-3 p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdNavbar" aria-controls="bdNavbar" aria-expanded="false" aria-label="Toggle navigation">
+        <svg class="navbar-icon" width="50" height="50">
+          <use xlink:href="{% static 'filename.svg#navbar-icon' %}"></use>
+        </svg>
+      </button>
+      <!-- Offcanvas content -->
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="bdNavbar" aria-labelledby="bdNavbarOffcanvasLabel">
+        <div class="offcanvas-header px-4 pb-0">
+          <a class="navbar-brand" href="{% url 'home' %}">
+           <h2>EduRate</h2>
+          </a>
+          <button type="button" class="btn-close btn-close-black" data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#bdNavbar"></button>
+        </div>
+        <div class="offcanvas-body">
+          <ul id="navbar" class="navbar-nav text-uppercase justify-content-end align-items-center flex-grow-1 pe-3">
+            <li class="nav-item">
+            <h5>  <a class="nav-link me-4 " href="{% url 'home' %}">Home</a> </h5>
+
+               
+
+            </li>
+            <li class="nav-item">
+             <h5> <a class="nav-link me-4" href="{% url 'about' %}">About Us</a></h5>
+            </li>
+            <li class="nav-item">
+          
+              <h5><a class="nav-link" href="{% url 'profile_list'%}">Find Friends</a></h5>
+            </li>
+            &nbsp;
+              {% if user.is_authenticated %}
+           <li class="nav-item">
+               <h5> <a class="nav-link" href="{% url 'logout' %}">Log out </a></h5>
+              </li>
+
+
+             <li class="nav-item">
+              <div class="user-items ps-3">
+                <ul class="d-flex justify-content-end list-unstyled">
+                  <h5>
+                    <div class="navbar-nav me-auto pe-5  d-flex justify-content-end border-secondary jshadow-sm rounded-0  end" >
+                      <ul class="navbar-nav me-auto ">
+                        <li class="nav-item dropdown">
+                          <a class="nav-link  dropdown-toggle " data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Search | <i class="fa fa-search "></i></a>
+                          
+                          <!-- Dropdown menu -->
+                          <div class="dropdown-menu dropdown-menu-end rounded-0 shadow-sm ">
+                          <a class="dropdown-item" href="{% url 'search' %}"> Search for Post </a>
+                       <a class="dropdown-item" href="{% url 'search_user' %}">Search for User</a>
+                          </div>
+                        </li>
+                      </h5>
+                      </ul>
+                    </div>
+                  </li>
+
+                  <li >
+                  <h5>  <a class="nav-link" href="{% url 'profile' request.user.id %}">
+                    <i class="fa fa-user" style="color: black;"></i>
+                  </a></h5>
+                  </li>
+                  
+                  <li >
+                   <h5> <a id="notifications-link" class="nav-link" href="{% url 'notifications' %}"><i class="fa fa-bell" style="color: black;"></i> 
+                    <span class="badge rounded-pill bg-danger" id="new-notifications-badge"></span>
+                </a></h5>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            {% else %}
+
+            <li class="nav-item">
+             <h5> <a class="nav-link" href="{% url 'register' %}">Register</a></h5>
+            </li>
+    
+            <li class="nav-item">
+              <h5><a class="nav-link" href="{% url 'login' %}">Log In </a></h5>
+            
+    
+            </li>
+            
+  
+            {% endif %}
+           
+          </ul>
+          
+        </div>
+      </div>
+     
+    </div>
+   
+  </nav>  
+   
+</header>
+   
+
+
+
+<script>
+  $(document).ready(function() {
+    // Function to update the badge count
+    function updateBadge() {
+      $.ajax({
+        url: '{% url "get_unread_notification_count" %}',
+        success: function(data) {
+          $('#new-notifications-badge').text(data.unread_notification_count);
+        }
+      });
+    }
+
+    // Function to reset the badge count to zero
+    function resetBadge() {
+      $('#new-notifications-badge').text(0);
+    }
+
+    $(document).ready(function() {
+      // Initial call to updateBadge
+      updateBadge();
+
+      // Set up interval to periodically update the badge
+      setInterval(updateBadge, 60000); // Refresh every minute
+
+      // Listen for a click on the notifications link
+      $('#notifications-link').click(function(event) {
+        // Update the badge count to zero
+        resetBadge();
+
+        // Update the unread notification count to zero
+        $.ajax({
+          url: '{% url "update_read_notifications" %}',
+          success: function(data) {
+            console.log('Notifications marked as read.');
+          }
+        });
+      });
+    });
+  });
+</script>

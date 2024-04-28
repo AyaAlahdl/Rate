@@ -1,0 +1,191 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+
+{% block content %}
+<style>
+
+
+  button {
+ padding: 0.8em 1.8em;
+ border: 2px solid #535555;
+ position: relative;
+ overflow: hidden;
+ background-color: transparent;
+ text-align: center;
+ text-transform: uppercase;
+ font-size: 16px;
+ transition: .3s;
+ z-index: 1;
+ font-family: inherit;
+ color: #535555;
+}
+
+button::before {
+ content: '';
+ width: 0;
+ height: 300%;
+ position: absolute;
+ top: 50%;
+ left: 50%;
+ transform: translate(-50%, -50%) rotate(45deg);
+ background: #535555;
+ transition: .5s ease;
+ display: block;
+ z-index: -1;
+}
+
+button:hover::before {
+ width: 105%;
+}
+
+button:hover {
+ color: #111;
+}
+
+#buttons {
+ padding: 0.8em 1.8em;
+ border: 2px solid #fdfdfd;
+ position: relative;
+ overflow: hidden;
+ background-color: transparent;
+ text-align: center;
+ text-transform: uppercase;
+ font-size: 16px;
+ transition: .3s;
+ z-index: 1;
+ font-family: inherit;
+ color: #070707;
+}
+
+#buttons::before {
+ content: '';
+ width: 0;
+ height: 300%;
+ position: absolute;
+ top: 50%;
+ left: 50%;
+ transform: translate(-50%, -50%) rotate(45deg);
+ background: #cacaca;
+ transition: .5s ease;
+ display: block;
+ z-index: -1;
+ color: #fcfcfc;
+ 
+}
+
+#buttons:hover::before {
+ width: 105%;
+}
+
+#buttons:hover {
+ color: #fcfcfc;
+}
+
+
+</style>
+{% if user.is_authenticated %}
+    <h1>You are already logged in</h1>
+{% else %}
+    <div class="container text-center" style="max-width: 540px;">
+        <br/>
+        <br/>
+        <form method="POST" action="">
+            {% csrf_token %}
+         <h3>  Registration</h3>
+         <hr/>
+           <h5> <small class="form-text text-muted">Join EduRate today and take control of your education journey!</small></h5>
+            
+            <hr/>
+            <label for="id_username">Username</label>
+            <div class="form-group shadow">
+                {% render_field form.username class+="form-control" %}
+            </div>
+            <span id="username-help" class="form-text text-danger" style="display: none;"><small>Only letters, numbers, and @/./+/-/_ characters are allowed.</small></span>
+            <br>
+            <label for="first_name">First Name</label>
+            <div class="form-group shadow">
+                {{ form.first_name }}
+            </div>
+            <br>
+            <label for="last_name">Last Name</label>
+            <div class="form-group shadow">
+                {{ form.last_name }}
+            </div>
+            <br>
+            <label for="email">Email</label>
+            <div class="form-group shadow">
+                {{ form.email }}
+            </div>
+            <br>
+            <label for="id_password1">Password</label>
+            <div class="form-group shadow">
+                {% render_field form.password1 class+="form-control" %}
+            </div>
+            <div id="password1-help" class="form-text text-danger" style="display: none;">
+                <small>The password must not be similar to your other personal information.</small><br>
+                <small>The password must contain at least 8 characters.</small><br>
+                <small>The password cannot be a commonly used password.</small><br>
+                <small>The password cannot be entirely numeric.</small>
+            </div>
+            <br>
+            <label for="id_password2">Confirm Password</label>
+            <div class="form-group shadow">
+                {% render_field form.password2 class+="form-control" %}
+            </div>
+            <span id="password-help" class="form-text text-danger" style="display: none;"><small>Enter the same password as above, for verification.</small></span>
+            <br/>
+            <br/>
+            <button type="submit" class="btn btn-outline-dark rounded-0"> <h5> <small><small>Register <i class="fa fa-arrow-circle-right"></i></small> </small></h5></button>
+        </form>
+        <hr/>
+        <div class="d-flex justify-content-between">
+            <div>
+               <h5> <small><small> Sign in with Google Account</small> </small></h5> 
+              
+              <h5>  <a class="btn btn-light rounded-0 text-primary " id="buttons" href="{% url 'google_oauth' %}">Google <i class="fa fa-google"></i></a></h5> 
+                <br/>
+            </div>
+            <div>
+              <h5> <small><small>Already have an account</small> </small></h5>
+              
+                <h5><a href="{% url 'login' %}" class="btn btn-light rounded-0 text-primary "  id="buttons">Login <i class="fa fa-sign-in"></i></a></h5>
+            </div>
+    </div>
+      <br/>
+      <br/>
+    </div>
+  {% endif %}
+
+  <script>
+    // JavaScript to show the span element when hovering over the username field
+    document.getElementById('id_username').addEventListener('mouseover', function() {
+      document.getElementById('username-help').style.display = 'inline';
+    });
+  
+    // JavaScript to hide the span element when mouse leaves the username field
+    document.getElementById('id_username').addEventListener('mouseout', function() {
+      document.getElementById('username-help').style.display = 'none';
+    });
+  
+    // JavaScript to show the span element when hovering over the password field
+    document.getElementById('id_password2').addEventListener('mouseover', function() {
+      document.getElementById('password-help').style.display = 'inline';
+    });
+  
+    // JavaScript to hide the span element when mouse leaves the password field
+    document.getElementById('id_password2').addEventListener('mouseout', function() {
+      document.getElementById('password-help').style.display = 'none';
+    });
+  
+       // JavaScript to show the span element when hovering over the password field
+    document.getElementById('id_password1').addEventListener('mouseover', function() {
+      document.getElementById('password1-help').style.display = 'inline';
+    });
+  
+    // JavaScript to hide the span element when mouse leaves the password field
+    document.getElementById('id_password1').addEventListener('mouseout', function() {
+      document.getElementById('password1-help').style.display = 'none';
+    });
+  </script>
+{% endblock %}

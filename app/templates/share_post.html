@@ -1,0 +1,69 @@
+<!-- In share_post.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container text-center">
+
+  <div class="row">
+  
+    <div class="card border-primary mb-3 p-3">
+      <p style="font-size: x-large; font-weight: 400;">Share this Post</p> 
+    </div>
+    <br/>
+    <br/>
+
+    <div class="list-group">
+      <a href="#" class="list-group-item flex-column align-items-start">
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">
+            {% if meep.user.profile.profile_image %}
+              <img src="{{ meep.user.profile.profile_image.url }}" class="img-fluid rounded-circle" style="height: 50px; width: 50px;" alt="{{ profile.user.username }}">
+            {% else %}
+              <img src="{% static 'images/pro.png' %}" class="img-fluid rounded-circle" style="height: 50px; width: 50px;" alt="Profile Picture">
+            {% endif %}
+            &nbsp;
+            {{meep.user}}
+          </h5>
+          <small class="text-muted">{{meep.created_at}}</small>
+        </div>
+        <p class="mb-1">{{meep.body}} </p>
+        <small class="text-muted ">{{meep.number_of_likes}} Rates 
+          <div id="meep_{{ meep.pk }}">
+          {% if user in meep.likes.all %}
+            <a href="{% url 'meep_like' meep.id %}"  class="list-group-item list-group-item-action flex-column align-items-start">
+              Unrate <i class="fa-solid fa-star" style="color:yellow;"></i> 
+            </a>
+          {% else %}
+            <a href="{% url 'meep_like' meep.id %}"  class="list-group-item list-group-item-action flex-column align-items-start">
+              Rate <i class="fa fa-star-o" style="color:yellow;"></i> 
+            </a>
+          {% endif %}
+        </div>
+          <br/>
+          <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}" rel="noopener" target="_blank">Share on Twitter</a> &nbsp;&nbsp;
+          <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" rel="noopener" target="_blank">Share on Facebook</a>
+        </small>
+      </a>
+    </div>
+    <br/>
+
+  </div>
+
+  <br/>
+
+  {% if form %}
+    <form method="POST">
+      {% csrf_token %}
+      <fieldset>
+        <legend>Write a Post</legend>
+        <hr/>
+        {{ form.as_p }}
+        <br>
+        <button type="submit" class="btn btn-primary">Send</button>
+      </fieldset>
+    </form>
+  {% endif %}
+</div>
+{% endblock %}
+<!-- Add share buttons or other sharing options here -->

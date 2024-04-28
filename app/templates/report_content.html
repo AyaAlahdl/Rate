@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+
+<div class="alert alert-dismissible alert-light container text-center" style="max-width: 540px;">
+
+    <h1>Report Content</h1>
+    {% if form.errors %}
+    <div class="alert alert-danger">
+        {% for field, errors in form.errors.items %}
+        {{ field|title }}: {{ errors|join:", " }}
+        {% endfor %}
+    </div>
+    {% endif %}
+    <form method="POST">
+        {% csrf_token %}
+        
+        <input type="hidden" name="meep" value="{{ meep.id }}">
+        
+        <label for="report_type" class="form-label mt-4">Select Report Type</label>
+        <select class="form-select" name="report_type" id="report_type">
+            <option value="spam">Spam</option>
+            <option value="harassment">Harassment</option>
+            <option value="hate_speech">Hate Speech</option>
+            <option value="hate_speech">Other</option>
+            <!-- Add more report types as needed -->
+        </select><br><br>
+        
+        <label for="description" class="form-label mt-4">Description</label><br>
+        <textarea name="description" id="description" class="form-control" rows="4" cols="50"></textarea><br><br>
+        
+        <button type="submit" class="btn btn-medium btn-arrow outline-dark position-relative mt-3">Submit Report</button>
+        <br>
+    </form>
+   
+    <br/>
+    <a href="{% url 'home' %}" class="btn btn-medium btn-arrow outline-dark position-relative mt-3">
+        <span class="text-uppercase">Return </span>            
+        <svg class="arrow-right position-absolute" width="18" height="20">
+          <use xlink:href="#arrow-right"></use>
+        </svg>
+      </a>  
+    <br/>
+</div>
+
+{% endif %}
+{% endblock %}

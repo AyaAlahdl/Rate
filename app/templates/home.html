@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% load i18n %}
+<div class="container text-center">
+  <div class="row justify-content-center align-items-center">
+    <div class="col-md-8">
+      <div class="card border-dark mb-3 p-3 rounded-0 shadow-sm">
+        <div class="detail">
+          <div class="display-header">
+            <h2 class=" text-uppercase text-dark"> Posts </h2>
+           
+              
+          </div>
+        </div>
+    
+      </div>
+      <br/>
+      <br/>
+      
+        {% if form %}
+        <div class="card border-dark mb-3 p-3 rounded-0 shadow-sm">
+          <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset>
+              <legend>Write a Post</legend>
+              <hr/>
+              
+              {{ form.body }}
+              
+              <div class="form-group text-body-emphasis">
+                &nbsp;&nbsp; &nbsp;<br> <i class="fa fa-image"></i> {% trans "Choose Image" %} {{ form.image}}
+              </div>
+              <br>
+             
+              <button type="submit" class="btn  btn-arrow outline-dark position-relative  mt-3">
+                <span class="text-uppercase">Post</span>            
+                
+              </button>
+            </fieldset>
+          </form>
+        </div>
+        <hr>
+        {% endif %}
+    
+     
+      
+      <br>
+      {% for meep in meeps %}
+      <div class="list-group shadow-sm">
+        <a href="{% url 'profile' meep.user.profile.user.id %}" class="list-group-item flex-column align-items-start">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">
+              {% if meep.user.profile.profile_image %}
+                <img src="{{ meep.user.profile.profile_image.url }}" class="img-fluid rounded-circle" style="height: 50px; width: 50px;" alt="{{ profile.user.username }}">  
+              {% else %}
+                <img src="{% static 'images/pro.png' %}" class="img-fluid rounded-circle" style="height: 50px; width: 50px;" alt="images">
+              {% endif %}
+              &nbsp;
+              {{meep.user}} 
+            </h5>
+            <small class="text-muted">{{meep.created_at|timesince}} </small>
+          </div>
+        </a>
+        <a href="{% url 'meep_show' meep.id %}" class="list-group-item flex-column align-items-start">
+        
+            <p class="mb-1">{{meep.body}} </p>
+         
+          {% if meep.image %}
+            <img src="{{ meep.image.url }}" class="img-fluid" alt="Meep Image">
+          {% endif %}
+          <hr>
+          <div class="d-flex w-100 justify-content-around">
+            <small class="text-muted">{{meep.number_of_likes}} Rates</small>
+            <p>{{ meep.num_comments }} Comments</p>
+          </div>
+          <div id="meep_{{ meep.pk }}" class="d-flex w-100 justify-content-between">
+            {% if user in meep.likes.all %}
+              <a href="{% url 'meep_like' meep.id %}" class="list-group-item list-group-item-action flex-column align-items-start" >
+                Unrate <i class="fa-solid fa-star" style="color:yellow;"></i>
+              </a>
+            {% else %}
+              <a href="{% url 'meep_like' meep.id %}" class="list-group-item list-group-item-action flex-column align-items-start" >
+                Rate <i class="fa fa-star-o" style="color:yellow;"></i> 
+              {% endif %}
+            </a>
+            <a href="{% url 'meep_show' meep.id %}" class="list-group-item list-group-item-action flex-column align-items-start">
+              Comment &nbsp;<i class="fa-solid fa-comment"></i>
+            </a>  
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" onclick="redirectToSharePage('{{ meep.id }}')">
+              Share &nbsp;<i class="fa-solid fa-share"></i>
+            </a>
+          </div>
+        </a>
+      </div>
+      <br/>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script>
+ function redirectToSharePage(postId) {
+  var shareLink = '/share/' + postId;
+  window.open(shareLink, '_blank', 'width=600,height=400,noopener');
+ }
+
+</script>
+
+{% endblock %}

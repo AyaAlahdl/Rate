@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+  .btn-custom {
+    padding: 0.8em 1.8em;
+    border: 2px solid #535555;
+    position: relative;
+    overflow: hidden;
+    background-color: transparent;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 16px;
+    transition: .3s;
+    z-index: 1;
+    font-family: inherit;
+    color: #535555;
+  }
+
+  .btn-custom::before {
+    content: '';
+    width: 0;
+    height: 300%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    background: #535555;
+    transition: .5s ease;
+    display: block;
+    z-index: -1;
+  }
+
+  .btn-custom:hover::before {
+    width: 105%;
+  }
+
+  .btn-custom:hover {
+    color: #111;
+  }
+</style>
+
+{% if user.is_authenticated %}
+<div class="container text-center">
+    <h2>You are already logged in</h2>
+</div>
+{% else %}
+
+<div class="container text-center" style="max-width: 540px;">
+    <br/>
+    <br/>
+
+    <form method="POST" action="{% url 'login' %}">
+        {% csrf_token %}
+        <fieldset>
+            <h3>Login</h3>
+            <h5><small class="form-text text-muted">Join EduRate today and take control of your education journey!</small></h5>
+            <br/>
+            <hr>
+            <div class="form-group">
+                <label for="id_username" class="form-label mt-4">Username</label>
+                <input type="text" id="id_username" class="form-control p-3" name="username" placeholder="Enter your username" style="text-transform: none;">
+            </div>
+
+            <div class="form-group">
+                <label for="id_password" class="form-label mt-4">Password</label>
+                <input type="password" class="form-control p-3" id="id_password" name="password" placeholder="Enter your password">
+            </div>
+            <br/>
+
+            <button type="submit" class="btn btn-custom rounded-0">Login <i class="fa fa-sign-in"></i></button>
+        </fieldset>
+    </form>
+
+    <br>
+    <hr>
+    <div class="d-flex justify-content-between">
+        <div>
+            <h5><small><small>Don't have an account?</small></small></h5>
+            <h5><a href="{% url 'register' %}" class="btn btn-light rounded-0">Sign Up Here <i class="fa fa-arrow-circle-right"></i></a></h5>
+        </div>
+        <div>
+            <h5><small><small>Forgot Password?</small></small></h5>
+            <h5><a href="{% url 'password_reset' %}" class="btn btn-light rounded-0 button">Reset Password <i class="fa fa-arrow-circle-right"></i></a></h5>
+        </div>
+    </div>
+    <br>
+
+{% endif %}
+{% endblock %}

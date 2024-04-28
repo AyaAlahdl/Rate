@@ -1,0 +1,216 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+{% if profile %}
+
+<div class="container text-center">
+
+<div class="row">
+<div class="col-8">
+
+<div class="card border-primary shadow-sm rounded-0 mb-3 p-3 " >
+  <p style="font-size: x-large; font-weight: 600; 
+"> {{ profile.user.username }} Profile </p> 
+  
+  </div>
+ 
+  <br/>
+  <br/>
+  {% if meeps %}
+{% for meep in meeps %}
+
+
+<div class="list-group shadow-sm">
+  
+  <a href="{% url 'meep_show' meep.id %}" class="list-group-item  flex-column align-items-start">
+    <div class="container">
+      <div class="row">
+       
+       
+
+          <div class="d-flex w-100 justify-content-between">
+          
+            <h5 class="mb-1">
+              {% if profile.profile_image %}
+              <img src="{{ profile.profile_image.url }}" class="img-fluid rounded-circle" style="height: 50px; width: 50px;" alt="{{ profile.user.username }}">
+              {% else %}
+              <img src="{% static 'images/pro.png' %}" class="img-fluid rounded-circle" style="height: 50px; width: 50px;" alt=" profile">
+              {% endif %}
+              &nbsp;
+              
+
+              {{meep.user}}</h5>
+            <small class="text-muted">{{meep.created_at}}</small>
+          </div>
+
+        
+      </div>
+
+    </div>
+
+
+    <p class="mb-1">{{meep.body}}</p>
+    {% if meep.image %}
+    <img src="{{ meep.image.url }}"  class="img-fluid"  alt="Image">
+{% endif %}
+<hr/>
+       
+<div class="d-flex w-100 justify-content-around">
+  <small class="text-muted  ">{{meep.number_of_likes}} Rates </small>
+    <small >{{ meep.num_comments }} Comments</small>
+</div>
+
+      <div id="meep_{{ meep.pk }}" class="d-flex w-100 justify-content-between">
+      {% if user in meep.likes.all %}
+      <a href="{% url 'meep_like' meep.id %}"  class="list-group-item list-group-item-action flex-column align-items-start">
+         Unrate <i class="fa-solid fa-star" style="color:yellow;"></i> </a>
+  
+      {% else %}
+      <a href="{% url 'meep_like' meep.id %}"  class="list-group-item list-group-item-action flex-column align-items-start">
+        Rate  <i class="fa fa-star-o" style="color:yellow;"></i> </a>
+      {%endif%}
+
+    
+  {% if request.user.username == profile.user.username %}
+  <a href="{% url 'delete_meep' meep.id %}" class="list-group-item list-group-item-action flex-column align-items-start">Delete &nbsp;<i class="fa-solid fa-trash" style="font-size: small;"></i></a>
+  <a href="{% url 'edit_meep' meep.id %}" class="list-group-item list-group-item-action flex-column align-items-start">Edit &nbsp;<i class="fa-solid fa-edit" style="font-size: small;"></i></a>
+ 
+  {%endif%}
+  <a href="{% url 'meep_show' meep.id %}" class="list-group-item list-group-item-action flex-column align-items-start">
+    Comment 
+  </a>
+      </div>
+    </small>
+
+  </a>
+
+</div>
+<br/>
+<br/>
+  
+{% endfor %}
+{%endif%}
+</div>
+
+
+<div class="col-4">
+  
+    <div class="card border-dark mb-3 p-2 " style="max-width:  54rem;" >
+      <div class="card-header">  <p style="font-size: x-large; 
+        "> <Picture> Image </Picture> </p></div>
+      
+      <div class="card-body">
+        {% if profile.profile_image %}
+        <img src=" {{ profile.profile_image.url }}"  alt=" My Image" style="width: 100px; height: 100px ;" class="rounded-circle border-secondary">
+        {%endif%}
+        
+          <hr>
+          <div class="card-header">
+          {% if profile.profile_bio %}
+            {{ profile.profile_bio }}
+          {%endif%}
+          </div>
+         <div class="card-footer">
+          
+          {% if profile.homepage_link %}
+             <a href="{{ profile.homepage_link }}" class="btn-outline-primary" target="new"><i class="fa fa-link"></i></a> 
+          {%endif%}
+          &nbsp;
+         {% if profile.facebook_link %}
+            <a href="{{ profile.facebook_link }}" target="new"><i class="fa fa-facebook"></i></a> 
+         {%endif%}
+         &nbsp;
+         {% if profile.instagram_link %}
+           <a href="{{ profile.instagram_link }}" target="new"><i class="fa fa-instagram"></i></a> 
+         {%endif%}
+         &nbsp;
+         {% if profile.linkedin_link %}
+            <a href="{{profile.linkedin_link }}" target="new"><i class="fa fa-linkedin"></i></a>
+         {%endif%}
+         </div>
+        
+      </div>
+    
+  <div class="card border-secondary mb-3 p-2 " >
+    <div class="card-header">  <p style=" font-weight: bold;
+      "> followers </p></div>
+    
+    <div class="card-body">
+        {% for following in profile.follows.all %}
+       <a href="{%url 'profile' following.user.id %}"class="text-decoration-none" >@{{ following }} </a>
+       &nbsp;&nbsp; <a href="{%url 'unfollow' following.user.id %}"class="text-decoration-none" style="font-size: small;" ><i class="fa fa-user-times"></i></a>
+       <br/>
+  
+     {% endfor%} 
+    </div>
+    <div class="card-footer">
+      <a href="{%url 'follows' profile.user.id %}" class="text-decoration-none" style="font-size: small;">
+         See all.&nbsp; &nbsp;
+        <i class="fa fa-plus"></i></a>
+    </div>
+   </div>
+
+
+  
+  <div class="card border-secondary mb-3 p-3 " >
+    <div class="card-header">  <p style="
+      font-weight: bold;">   Followed </p></div>
+    <div class="card-body">
+        {% for following in profile.followed_by.all|slice:3 %}
+        <a href="{%url 'profile' following.user.id %}"class="text-decoration-none" >@{{ following }} </a>
+
+        {% if following in profile.follows.all %}
+        &nbsp;&nbsp;  <a href="{%url 'unfollow' following.user.id %}" class="text-decoration-none" style="font-size: small;">&nbsp;&nbsp;<i class="fa fa-user-times"></i></a>
+        {% else %}
+        &nbsp;&nbsp;  <a href="{%url 'follow' following.user.id %}" class="text-decoration-none" style="font-size: small;"><i class="fa fa-user-plus"></i></a>
+        {%endif%}
+        <br/>
+        {% endfor%} 
+
+        <br/>
+
+       
+    </div>
+    <div class="card-footer">
+      <a href="{%url 'followers' profile.user.id %}" class="text-decoration-none" style="font-size: small;">
+         See all.&nbsp; &nbsp;
+        <i class="fa fa-plus"></i></a>
+    </div>
+   </div>
+        
+   
+   <form method="POST">
+    {% csrf_token %}
+    
+    <fieldset>
+      <legend></legend>
+      {% if profile in user.profile.follows.all %}
+    <button type="submit" class="btn btn-outline-danger rounded-0" name="follow" value="unfollow">
+       Unfollow @{{ profile.user.username|lower }}
+    </button>
+    {% else %}
+    <button type="submit" class="btn btn-outline-primary rounded-0 border-1" name="follow" value="follow">
+        Follow @{{ profile.user.username|lower }}
+    </button>
+    {%endif%}
+    
+     <br/>
+     
+    </fieldset>
+  </form>
+</div>
+
+  {% if request.user.id == profile.user.id  %}
+  <hr/>
+  <a href="{% url 'update_user' %}" class="btn btn-outline-secondary rounded-0"> Edit the profile</a><br/>
+   {%endif%}
+
+  
+</div>
+</div>
+</div>
+<br/>
+  {% endif %}
+
+{% endblock%} 

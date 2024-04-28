@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load widget_tweaks %}
+
+<div class="container text-center" style="max-width: 540px;">
+
+  <br/>
+  <br/>
+
+  <form method="POST" class="card border-light shadow rounded-0 mb-3 p-5" action="" enctype="multipart/form-data">
+    {% csrf_token %}
+    <p style="font-size: x-large; font-weight: 400; font-family: 'Arabic-font';">Update Your Profile</p>
+    <br/>
+    <hr/>
+
+    <label for="" class="col-form-label">Username</label>
+    <div class="form-group shadow">
+      {% render_field user_form.username class+="form-control" %}
+    </div>
+
+    <span id="username-help" class="form-text text-danger" style="display: none;"><small>Only letters, numbers, and @/./+/-/_ characters are allowed.</small></span>
+    <br/>
+
+    <label for="" class="col-form-label">First Name</label>
+    <div class="form-group shadow">
+      {{ user_form.first_name }}
+    </div>
+    <br/>
+
+    <label for="" class="col-form-label">Last Name</label>
+    <div class="form-group shadow">
+      {{ user_form.last_name }}
+    </div>
+    <br/>
+
+    <label for="" class="col-form-label">Email</label>
+    <div class="form-group shadow">
+      {{ user_form.email }}
+    </div>
+    <br/>
+
+    <label for="" class="col-form-label">Password</label>
+    <div class="form-group shadow">
+      {% render_field user_form.password1 class+="form-control" %}
+    </div>
+
+    <div id="password1-help" class="form-text text-danger" style="display: none;">
+      <small>Password must not be similar to your other personal information.</small><br>
+      <small>Password must contain at least 8 characters.</small><br>
+      <small>Passwords commonly used cannot be used.</small><br>
+      <small>Your password cannot consist of only numbers.</small>
+    </div>
+
+    <label for="" class="col-form-label">Confirm Password</label>
+    <div class="form-group shadow">
+      {% render_field user_form.password2 class+="form-control" %}
+    </div>
+
+    <!-- Hidden span element initially -->
+    <span id="password-help" class="form-text text-danger" style="display: none;"><small>Enter the same password as above to verify.</small></span>
+
+    <br>
+    <br>
+
+    <div class="form-group shadow bg-body-secondary">
+      {{profile_form.profile_image}}
+    </div>
+    <br/>
+    <br/>
+    <div class="form-group shadow">
+      {{profile_form.profile_bio}}
+    </div>
+    <br/>
+    <br/>
+    <div class="form-group shadow">
+      {{profile_form.homepage_link}}
+    </div>
+    <br/>
+    <br/>
+    <div class="form-group shadow">{{profile_form.facebook_link }}</div>
+    <br/>
+    <br/>
+    <div class="form-group shadow">
+      {{profile_form.instagram_link }}
+    </div>
+    <br/>
+    <br/>
+    <div class="form-group shadow">
+      {{profile_form.linkedin_link}}
+    </div>
+    <br/>
+
+    <br/>
+
+    <button type="submit" class="btn btn-primary rounded-0">Update <i class="fa fa-edit"></i></button>
+    <br/>
+    <br/>
+    <hr>
+    <a href="{% url 'profile' pk=user.pk %}" class="btn btn-light shadow-sm text-black rounded-0">Back <i class="fa fa-arrow-left"></i></a><br/>
+
+  </form>
+</div>
+
+
+<script>
+  // JavaScript to show the span element when hovering over the username field
+  document.getElementById('id_username').addEventListener('mouseover', function() {
+    document.getElementById('username-help').style.display = 'inline';
+  });
+
+  // JavaScript to hide the span element when mouse leaves the username field
+  document.getElementById('id_username').addEventListener('mouseout', function() {
+    document.getElementById('username-help').style.display = 'none';
+  });
+
+  // JavaScript to show the span element when hovering over the password field
+  document.getElementById('id_password2').addEventListener('mouseover', function() {
+    document.getElementById('password-help').style.display = 'inline';
+  });
+
+  // JavaScript to hide the span element when mouse leaves the password field
+  document.getElementById('id_password2').addEventListener('mouseout', function() {
+    document.getElementById('password-help').style.display = 'none';
+  });
+
+     // JavaScript to show the span element when hovering over the password field
+  document.getElementById('id_password1').addEventListener('mouseover', function() {
+    document.getElementById('password1-help').style.display = 'inline';
+  });
+
+  // JavaScript to hide the span element when mouse leaves the password field
+  document.getElementById('id_password1').addEventListener('mouseout', function() {
+    document.getElementById('password1-help').style.display = 'none';
+  });
+</script>
+
+{% endblock %}

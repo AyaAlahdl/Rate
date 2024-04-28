@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center"> <!-- Center the container -->
+        <div class="col-lg-6"> <!-- Adjust the column width as needed -->
+            <div class="card border-primary  rounded-0 mb-3 p-3 text-center shadow-sm">
+                <p style="font-size: x-large; font-weight: 400; font-family: 'Arabic-font';">Notifications</p>
+            </div>
+
+            {% for notification in notifications %}
+            <div class="card border-secondary mb-3 shadow-sm">
+                <div class="card-body">
+                    {% if notification.type == 'report' %}
+                        <div class="d-flex align-items-center mb-3">
+                            <a href="{% url 'view_reports'  %}" class="list-group-item outline-secondary flex-column align-items-start">
+                                <p><i class="fa fa-flag"></i> Your post has been reported.</p>
+                            </a>
+                            <p>We are investigating the issue.</p>
+                        </div>
+                    {% else %}
+                        <div class="d-flex align-items-center mb-3">
+                            {% if notification.sender.profile and notification.sender.profile.profile_image %}
+                                <div class="me-3">
+                                    <img src="{{ notification.sender.profile.profile_image.url }}" class="img-fluid rounded-circle" style="height: 50px; width: 50px;" alt="{{ notification.sender.username }} Profile Picture">
+                                </div>
+                            {% else %}
+                                <div class="me-3">
+                                    <img src="{% static 'images/pro.png' %}" class="img-fluid rounded-circle" style="height: 50px; width: 50px;" alt="images">
+                                </div>
+                            {% endif %}
+                            <div>
+                                {% if notification.type == 'like' %}
+                                    <a href="{% url 'meep_show' pk=notification.meep.id %}" class="list-group-item outline-secondary flex-column align-items-start">
+                                        <p><strong>{{ notification.sender.username }}</strong> liked your post </p>
+                                    </a>
+                                {% elif notification.type == 'comment' %}
+                                    <a href="{% url 'meep_show' pk=notification.meep.id %}" class="list-group-item outline-secondary flex-column align-items-start">
+                                        <p><strong>{{ notification.sender.username }}</strong> commented on your post </p>
+                                    </a>
+                                {% elif notification.type == 'mention' %}
+                                    <a href="{% url 'meep_show' pk=notification.meep.id %}" class="list-group-item outline-secondary flex-column align-items-start">
+                                        <p><strong>{{ notification.sender.username }}</strong> mentioned you in a post </p>
+                                    </a>
+                                {% elif notification.type == 'share' %}
+                                    <p><strong>{{ notification.sender.username }}</strong> shared your post</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

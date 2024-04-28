@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="author" content="">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>EduRate</title>
+    {% load static %}
+    {% load i18n %}
+     <!-- ملفات Font Awesome Free's Solid و Brand فقط -->
+     <script src="https://kit.fontawesome.com/478f41947d.js" crossorigin="anonymous"></script>
+      <!-- Link Bootstrap CSS -->
+      <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+      <!-- Link Custom CSS -->
+      <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+      <!-- Link Swiper CSS -->
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+      <!-- Google Fonts -->
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Poppins:wght@200;300;400;500&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" type="text/css" href="https://bootswatch.com/5/lux/bootstrap.min.css">  -->
+    <script src="https://cdn.jsdelivr.net/npm/emoji-picker-element@latest/dist/emoji-picker-element.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+           $(document).ready(function() {
+            // تهيئة العلامة التبويبية بعدد الإشعارات غير المقروءة الأولي
+            $('#new-notifications-badge').text(initial_unread_notification_count);
+            setInterval(function() {
+                // استدعاء AJAX لتحديث العلامة دورياً
+                $.ajax({
+                    url: '{% url "get_unread_notification_count" %}',
+                    success: function(data) {
+                        // تحديث العلامة بالعدد الجديد للإشعارات غير المقروءة
+                        $('#new-notifications-badge').text(data.unread_notification_count);
+                    }
+                });
+            }, 60000); // تحديث كل دقيقة
+        });
+    </script>
+
+
+  </head>
+    <body class="bg-body" data-bs-spy="scroll" data-bs-target="#navbar" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" tabindex="0">
+
+  
+      <div id="preloader">
+        <span class="loader">
+          <span class="loader-inner"></span>
+        </span>
+      </div>
+  
+      <div class="search-box position-relative overflow-hidden w-100">
+        <div class="search-wrap">
+          <div class="close-button position-absolute">
+            <svg class="close" width="22" height="22">
+              <use xlink:href="#close"></use>
+            </svg>
+          </div>
+          <form id="search-form" class="text-center pt-3" action="" method="">
+            <input type="text" class="search-input fs-5 p-4 bg-transparent" placeholder="Search...">
+            <svg class="search" width="22" height="22">
+              <use xlink:href="#search"></use>
+            </svg>
+          </form>
+        </div>
+      </div> 
+    {% include 'navbar.html' %}
+
+    <br>
+    <div class="container ">
+        {% if messages %}
+           {% for message in messages %} 
+            
+           <div class="alert alert-dismissible alert-heading shadow"  >
+            <button title="button" type="button" class="btn-close" data-bs-dismiss="alert"></button>
+           
+             {{ message }} 
+            
+                
+               
+          </div>
+          
+            
+  
+          </div>
+           {% endfor %}
+        {%endif%}
+        {% block content %}
+        <div id="notification_count"></div>
+         {% endblock %}
+    </div>
+    <script src="{% static 'js/jquery-1.11.0.min.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/plugins.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+    <script src="{% static 'js/modernizr.js' %}"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script> -->
+  </body>
+</html>

@@ -1,0 +1,104 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% load i18n %}
+
+<div class="col-lg-6">
+    <div class="detail p-5">
+      <div class="display-header">
+        <h2 class="display-2 text-uppercase text-dark pb-2">Terms of Service</h2>
+        <p class="pb-3">These Terms of Service govern your access to and use of the EduRate website.
+          <br>
+          Please read these Terms carefully before using the Service.
+          <br>
+          By accessing or using the Service you agree to be bound by these Terms. If you disagree with any part of the terms then you may not access the Service.</p>
+          <h2 class="display-2 text-uppercase text-dark pb-1">Account</h2>
+        <p>When you create an account with us, you must provide accurate and complete information. 
+          You are solely responsible for the activity that occurs on your account, and you must keep your account password secure.
+           You must notify us immediately of any unauthorized use of your account. </p>
+           <h2 class="display-2 text-uppercase text-dark pb-1">Content</h2>
+        <p>Our Service allows you to post, review, share and otherwise make available certain information, text, graphics, image, or other material. You are responsible for the Content that you post on or through the Service,
+           including its legality, reliability, and appropriateness.
+
+          By posting Content on or through the Service, 
+          you represent and warrant that:
+          <br> (i) the Content is yours (you own it) and/or you have the right to use it and the right to grant us the rights and license as provided in these Terms, and 
+          <br>(ii) that the posting of your Content on or through the Service does not violate the privacy rights, publicity rights, copyrights, contract rights or any other rights of any person or entity. 
+          We reserve the right to terminate the account of anyone found to be infringing on a copyright. </p>
+        
+      </div>
+    </div>
+  </div>
+
+  <footer id="footer" class="overflow-hidden padding-large">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="row d-flex flex-wrap justify-content-between">
+          <div class="col-lg-3 col-sm-6 pb-3 pe-4">
+            <div class="footer-menu">
+             <h1>EduRate</h1>
+
+              <p>Mi facilisis facilisis orci vitae. Cum nisi morbi integer tincidunt ornare ac praesent in. Dolor tempus arcu sit quis nunc arcu facilisis quis eget nisi morbi integer.</p>
+            </div>
+            <div class="copyright">
+              <p>© Copyright 2023. Design by Aya
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-2 col-sm-6 pb-3">
+            <div class="footer-menu text-uppercase">
+              <h5 class="widget-title pb-2">Quick Links</h5>
+              <ul class="menu-list list-unstyled text-uppercase">
+                <li class="menu-item pb-2">
+                    <a href="{% url 'home' %}">Home</a>
+                  </li>
+                  <li class="menu-item pb-2">
+                    <a href="{% url 'about' %}">About</a>
+                  </li>
+                  <li class="menu-item pb-2">
+                    <a href="{% url 'privacy_policy' %}">Privacy Policy</a>
+                  </li>
+                  <li class="menu-item pb-2">
+                    <a href="{% url 'terms_of_service' %}">terms of service</a>
+                  </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-2 col-sm-6 pb-3">
+            <div class="footer-menu text-uppercase">
+              <h5 class="widget-title pb-2">Social</h5>
+              <div class="social-links">
+                <ul class="list-unstyled">
+                  <li class="pb-2">
+                    <a href="#">Facebook</a>
+                  </li>
+                  <li class="pb-2">
+                    <a href="#">Twitter</a>
+                  </li>
+                  <li class="pb-2">
+                    <a href="#">Pinterest</a>
+                  </li>
+                  <li class="pb-2">
+                    <a href="#">Instagram</a>
+                  </li>
+                  <li>
+                    <a href="#">Youtube</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-sm-6">
+            <div class="footer-menu contact-item">
+              <h5 class="widget-title text-uppercase pb-2">Contact Us</h5>
+              <p><a href="">+ (0) 34 56 78 910</a></p>
+              <p><a href="mailto:">ellie@gmail.com</a></p>
+              <p>Cairo, Egypt</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  {% endblock%}

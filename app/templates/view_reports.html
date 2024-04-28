@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+<div class="card">
+<div class="alert  alert-light container text-center" style="max-width: 540px;">
+    <h1 class="card-header">View Reports</h1>
+    <ul class="card-body">
+        {% for report in reports %}
+        <li>
+            <strong>Reported by:</strong> Unknown<br>
+            <strong>Report Type:</strong> {{ report.report_type }}<br>
+            <strong>Reported Meep:</strong> {{ report.meep.body }}<br>
+            <strong>Description:</strong> {{ report.description }}<br>
+            <!-- Add additional information about the report as needed -->
+            
+        </li>
+        <hr>
+        {% empty %}
+        <li>No reports available.</li>
+        {% endfor %}
+        
+    </ul>
+    <a href="{% url 'home' %}" class="btn btn-medium btn-arrow outline-dark position-relative mt-3">
+        <span class="text-uppercase">Return </span>            
+        <svg class="arrow-right position-absolute" width="18" height="20">
+          <use xlink:href="#arrow-right"></use>
+        </svg>
+      </a>  
+  
+    <br/>
+</div>
+</div>
+<br>
+{% endif %}
+{% endblock %}
